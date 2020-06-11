@@ -1,0 +1,34 @@
+{
+  "name" : "CDPGRAFANA",
+  "label" : "CdpGrafana",
+"description" : "The CDP Grafana service",
+  "version" : "1.0",
+  "runAs" : { 
+    "user" : "root",
+    "group" : "root"
+   },  
+   "roles" : [
+    {
+       "name" : "GRAFANA_WEBSERVER",
+       "label" : "Grafana Web Server",
+       "pluralLabel" : "Grafana Web Servers",
+       "parameters" : [
+        {
+          "name" : "config_file",
+          "label" : "Grafana config file location",
+          "description" : "Grafana config file location",
+          "required" : "true",
+          "type" : "string",
+          "default" : "/opt/cloudera/parcels/CDP_GRAFANA/conf/defaults.ini"
+        }
+      ],
+      "startRunner" : {
+         "program" : "scripts/control.sh",
+         "args" : [ "start" ],
+         "environmentVariables" : {
+           "GRAFANA_CONFIG_FILE" : "${config_file}"
+         }
+      }
+    }
+  ]
+}
